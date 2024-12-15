@@ -7,22 +7,16 @@
 
 using namespace std;
 
-bool isSorted(vector<int> nums, size_t size){
+bool isSafe(vector<int> nums, size_t size){
     bool asc = true;
     bool desc = true;
     for(size_t i = 1;i < size;++i){
+        int diff = abs(nums[i] - nums[i - 1]);
+        if(!(diff >= 1 && diff <= 3)) return false;
         if(nums[i] > nums[i - 1]) desc = false;
         if(nums[i] < nums[i - 1]) asc = false;
     }
     return asc || desc;
-}
-
-bool checkDiff(vector<int> nums, size_t size){
-    for(size_t i = 1;i < size;++i){
-        int diff = abs(nums[i] - nums[i - 1]);
-        if(!(diff >= 1 && diff <= 3)) return false;
-    }
-    return true;
 }
 
 int main(){
@@ -40,9 +34,7 @@ int main(){
         }
         // store size as it will be used many times
         size_t size = inner.size();
-        bool isArraySorted = isSorted(inner, size);
-        bool hasCorrectDiff = checkDiff(inner,size);
-        if(isArraySorted && hasCorrectDiff){
+        if(isSafe(inner, size)){
             ans++;
         }
     }
